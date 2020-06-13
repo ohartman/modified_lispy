@@ -101,10 +101,8 @@ def repl(prompt='lis.py> '):
 def lispstr(exp):
     "Convert a Python object back into a Lisp-readable string."
     if isinstance(exp, List):
-        #print('list')
         return '(' + ' '.join(map(lispstr, exp)) + ')' 
     else:
-        #print(exp)
         return str(exp)
 
 ################ eval
@@ -112,16 +110,12 @@ def lispstr(exp):
 def eval(x, env=global_env):
     "Evaluate an expression in an environment."
     if isinstance(x, Symbol):      # variable reference
-        #print('here')
         return env[x]
     elif not isinstance(x, List):  # constant literal
-        print('hoya')
         return x                
     elif x[0] == 'quote':          # (quote exp)
         print(type(x))
         (_, exp) = x
-        #print(_)
-        #print(exp)
         return exp
     elif x[0] == 'if':             # (if test conseq alt)
         (_, test, conseq, alt) = x
@@ -134,7 +128,6 @@ def eval(x, env=global_env):
         (_, parms, body) = x
         return Procedure(parms, body, env)
     else:                          # (proc arg...)
-        #print(x)
         proc = eval(x[0], env)
         args = [eval(exp, env) for exp in x[1:]]
         print(proc)
